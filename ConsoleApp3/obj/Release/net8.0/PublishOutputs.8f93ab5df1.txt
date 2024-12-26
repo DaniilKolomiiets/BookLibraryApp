@@ -1,0 +1,5 @@
+C:\Users\Spayl\source\repos\ConsoleApp3\ConsoleApp3\bin\Release\net8.0\publish\ConsoleApp3.exe
+C:\Users\Spayl\source\repos\ConsoleApp3\ConsoleApp3\bin\Release\net8.0\publish\ConsoleApp3.dll
+C:\Users\Spayl\source\repos\ConsoleApp3\ConsoleApp3\bin\Release\net8.0\publish\ConsoleApp3.deps.json
+C:\Users\Spayl\source\repos\ConsoleApp3\ConsoleApp3\bin\Release\net8.0\publish\ConsoleApp3.runtimeconfig.json
+C:\Users\Spayl\source\repos\ConsoleApp3\ConsoleApp3\bin\Release\net8.0\publish\ConsoleApp3.pdb
