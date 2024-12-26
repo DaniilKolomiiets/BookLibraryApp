@@ -1,254 +1,347 @@
-﻿using System;
-
-namespace YourNamespace // Замените на подходящее имя пространства имен
+﻿namespace YourNamespace
 {
     class Program
     {
-        static void Main(string[] args) // Точка входа в программу
+        static void Main(string[] args)
         {
-            bool isOpen = true;
             Library library = new Library();
-            Prog prog = new Prog();
+            Core core = new Core();
+            bool isRunning = true;
 
-            while (isOpen)
+            while (isRunning)
             {
-                
-                prog.doMenu();
+                core.PrintMenu();
+                int choice = core.GetIntInput("\n\nВыберите действие: ");
 
-
-                int choice = prog.getIntInput("\n\nВыбор действия: ");
-
-
-                switch (choice.ToString())
+                switch (choice)
                 {
-                    case "1":
+                    case 1: // Добавить шкаф
                         Console.Clear();
-
-                        int shelfValue = prog.getIntInput("Введите количество полок: ");
-                        Console.Clear();
-                        string discription = prog.getStringInput("Введите описание шкафа (где он, какой это шкаф и любая полезная для вас информация: ");
-                        Console.Clear();
-                        library.creatCloset(Convert.ToInt32(shelfValue), discription);
-                        Console.Write($"Шкаф номер {library.getClosetValue()} создан\n\nНажмите любую клавишу, чтоб продолжить...");
-                        Console.ReadKey(true);
-                        Console.Clear();
+                        core.AddCloset(library);
                         break;
-                    case "2":
+                    case 2: // Удалить шкаф
                         Console.Clear();
-
-                        for (int i = 0; i < library.getClosetValue(); i++)
-                        {
-                            Console.WriteLine($"Шкаф номер {i + 1}");
-                        }
-
-
-                        int closetNumber = prog.getIntInput("\n\n\nКакой шкаф вы хотите удалить?\n\nНомер шкафа: ");
-                        library.deleteCloset(closetNumber);
-                        Console.Clear();
-                        Console.WriteLine($"Шкаф {closetNumber} удален.\n\nНажмите любую клавишу, чтоб продолжить...");
-
-                        Console.ReadKey(true);
-                        Console.Clear();
+                        core.RemoveCloset(library);
                         break;
-                    case "3":
+                    case 3: // Добавить книгу
                         Console.Clear();
-                        string tittle = prog.getStringInput("Введите Название книги: ");
-                        Console.Clear();
-
-
-                        string author = prog.getStringInput("Введите автора: ");
-                        Console.Clear();
-
-
-                        string genre = prog.getStringInput("Введите жанр: ");
-                        Console.Clear();
-
-                        string discriptio = prog.getStringInput("Введите описание книги: ");
-                        Console.Clear();
-                        for (int i = 0; i < library.getClosetValue(); i++)
-                        {
-                            Console.WriteLine($"Шкаф номер {i + 1}");
-                        }
-
-
-                        int closetNum = prog.getIntInput("\n\nВведите номер шкафа: ");
-
-                        Console.Clear();
-                        for (int i = 0; i < library.getShelfValue(closetNum); i++)
-                        {
-                            Console.WriteLine($"Полка номер {i + 1}");
-                        }
-
-
-                        int shelfNum = prog.getIntInput("\n\nВведите номер Полки: ");
-                        Console.Clear();
-                        library.createBook(closetNum, shelfNum, tittle, author, discriptio, genre);
-                        Console.WriteLine("Книга успешно добавлена!\n\nНажмите любую клавишу, чтоб продолжить...");
-                        Console.ReadKey(true);
-                        Console.Clear();
-
+                        core.AddBook(library);
                         break;
-                    case "4":
+                    case 4: // Удалить книгу
                         Console.Clear();
-                        Console.WriteLine("1) Найти книгу вручную\nНайти книгу по названию");
-                        int choi = prog.getIntInput("\n\nВыбор действия: ");
-                        if (choi == 1)
-                        {
+                        core.RemoveBook(library);
+                        break;
+                    case 5: // Найти книгу
+                        Console.Clear();
+                        core.FindBook(library);
+                        break;
+                    case 6: // Закрыть программу
+                        Console.Clear();
+                        isRunning = false;
+                        break;
+                    case 7: // Закрыть программу
+                        isRunning = false;
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Неверный выбор. Попробуйте снова.");
+                        break;
 
-                        }
-                        else if (choi == 2)
-                        {
 
-                        }
-                        else { }
-                        break;
-                    case "5":
-                        break;
-                    case "6":
-                        break;
-                    case "7":
-                        break;
-                    case "8":
-                        isOpen = false;
-                        break;
                 }
             }
         }
-    }
-}
 
 
-class Prog
-{
-    public void doMenu()
-    {
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("=====Меню=====");
-        Console.ForegroundColor = ConsoleColor.White;
 
-        Console.WriteLine("\n1) Добавить Шкаф");
-        Console.WriteLine("\n2) Удалить шкаф");
-        Console.WriteLine("\n3) Добавить книгу");
-        Console.WriteLine("\n4) Удалить книгу");
-        Console.WriteLine("\n5) Найти книгу");
-        Console.WriteLine("\n6) Изменения книги");
-        Console.WriteLine("\n7) Помощь");
-        Console.WriteLine("\n8) Закрыть пргограмму");
-    }
 
-    public int getIntInput(string prompt)
-    {
-        Console.Write(prompt);
-        int result; 
-
-        while (!int.TryParse(Console.ReadLine(), out result))
+        class Core
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("Ошибка: введите корректное число.");
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.Write("\n\nНажмите любую клавишу, чтоб продолжить..");
-            Console.ReadKey(true);
-            
-            Console.Write(prompt);
+            public void PrintMenu()
+            {
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("=====Меню=====");
+                Console.ForegroundColor = ConsoleColor.White;
+
+                Console.WriteLine("\n1) Добавить Шкаф");
+                Console.WriteLine("\n2) Удалить шкаф");
+                Console.WriteLine("\n3) Добавить книгу");
+                Console.WriteLine("\n4) Удалить книгу");
+                Console.WriteLine("\n5) Найти книгу");
+                Console.WriteLine("\n6) Изменения книги");
+                Console.WriteLine("\n7) Закрыть пргограмму");
+            }
+
+
+            public void RemoveBook(Library library)
+            {
+                string title = GetStringInput("Введите название книги для удаления: ");
+                if (library.RemoveBookByTitle(title))
+                {
+                    Console.Write("Книга успешно удалена.");
+                }
+                else
+                {
+                    Console.Write("Ошибка: книга не найдена");
+                }
+                Console.ReadKey();
+            }
+
+            public int GetIntInput(string prompt)
+            {
+                Console.Write(prompt);
+                int value;
+                while (!int.TryParse(Console.ReadLine(), out value))
+                {
+                    Console.Write("Ошибка: введите корректное число");
+                }
+                return value;
+            }
+
+            public string GetStringInput(string prompt)
+            {
+                Console.Write(prompt);
+                return Console.ReadLine() ?? string.Empty;
+            }
+
+            public void AddCloset(Library library)
+            {
+                int shelfCount = GetIntInput("Введите количество полок: ");
+                string description = GetStringInput("Введите описание шкафа: ");
+                library.AddCloset(shelfCount, description);
+                Console.Write("Шкаф добавлен");
+                Console.ReadKey();
+            }
+
+            public void RemoveCloset(Library library)
+            {
+                int closetNumber = GetIntInput("Введите номер шкафа для удаления: ");
+                if (library.RemoveCloset(closetNumber))
+                {
+                    Console.Write("Шкаф удалён");
+                }
+                else
+                {
+                    Console.Write("Ошибка: шкаф не найден");
+                }
+                Console.ReadKey();
+            }
+
+            public void AddBook(Library library)
+            {
+                string title = GetStringInput("Введите название книги: ");
+                string author = GetStringInput("Введите автора: ");
+                string genre = GetStringInput("Введите жанр: ");
+                string description = GetStringInput("Введите описание книги: ");
+
+                library.DisplayClosets();
+                int closetNumber = GetIntInput("Введите номер шкафа: ");
+                library.DisplayShelves(closetNumber);
+                int shelfNumber = GetIntInput("Введите номер полки: ");
+
+                if (library.AddBookToShelf(closetNumber, shelfNumber, title, author, genre, description))
+                {
+                    Console.Write("Книга добавлена");
+                }
+                else
+                {
+                    Console.Write("Ошибка: не удалось добавить книгу");
+                }
+                Console.ReadKey();
+            }
+
+            public void FindBook(Library library)
+            {
+                string title = GetStringInput("Введите название книги для поиска: \n");
+                var book = library.FindBookByTitle(title);
+
+                if (book != null)
+                {
+                    Console.WriteLine("Книга найдена:");
+                    Console.WriteLine($"Название: {book.Title}");
+                    Console.WriteLine($"Автор: {book.Author}");
+                    Console.WriteLine($"Жанр: {book.Genre}");
+                    Console.WriteLine($"Описание: {book.Description}");
+                }
+                else
+                {
+                    Console.Write("Книга не найдена");
+                }
+                Console.ReadKey();
+            }
+        }
+    }
+
+
+    class Library
+    {
+        private List<Closet> _closets = new();
+
+        public void AddCloset(int shelvesCount, string description)
+        {
+            _closets.Add(new Closet(shelvesCount, description));
         }
 
-        return result; 
-    }
-
-    public string getStringInput(string prompt)
-    {
-        Console.Write(prompt);
-        return Console.ReadLine() ?? string.Empty;
-    }
-}
-
-class Book
-{
-    private string _tittle;
-    private string _author;
-    private string _description;
-    private string _genre;
-
-    public Book(string tittle, string author, string description, string genre)
-    {
-        _tittle = tittle;
-        _author = author;
-        _description = description;
-        _genre = genre;
-    }
-}
-
-class Closet
-{
-    private int _shelfsValue;
-    private string _closetDiscription;
-    private List<Shelf> _shelfs;
-
-    public Closet(int shelfsValue, string closetDiscription)
-    {
-        _shelfs = new List<Shelf>();
-        _shelfsValue = shelfsValue;
-
-        createShelfs();
-        _closetDiscription = closetDiscription;
-    }
-
-    private void createShelfs()
-    {
-        for (int i = 0; i < _shelfsValue; i++)
+        public bool RemoveCloset(int closetNumber)
         {
-            _shelfs.Add(new Shelf());
+            if (closetNumber >= 1 && closetNumber <= _closets.Count)
+            {
+                _closets.RemoveAt(closetNumber - 1);
+                return true;
+            }
+            return false;
+        }
+
+        public void DisplayClosets()
+        {
+            for (int i = 0; i < _closets.Count; i++)
+            {
+                Console.WriteLine($"Шкаф {i + 1}: {_closets[i].Description}");
+            }
+        }
+
+        public void DisplayShelves(int closetNumber)
+        {
+            if (closetNumber >= 1 && closetNumber <= _closets.Count)
+            {
+                _closets[closetNumber - 1].DisplayShelves();
+            }
+            else
+            {
+                Console.Write("Ошибка: шкаф не найден");
+            }
+        }
+
+        public bool AddBookToShelf(int closetNumber, int shelfNumber, string title, string author, string genre, string description)
+        {
+            if (closetNumber >= 1 && closetNumber <= _closets.Count)
+            {
+                return _closets[closetNumber - 1].AddBookToShelf(shelfNumber, title, author, genre, description);
+            }
+            return false;
+        }
+
+        public Book? FindBookByTitle(string title)
+        {
+            foreach (var closet in _closets)
+            {
+                var book = closet.FindBookByTitle(title);
+                if (book != null)
+                {
+                    return book;
+                }
+            }
+            return null;
+        }
+
+        public bool RemoveBookByTitle(string title)
+        {
+            foreach (var closet in _closets)
+            {
+                if (closet.RemoveBookByTitle(title))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
-    public int getShelfValue() { return _shelfsValue; }
-
-    public void createBook(int ShelfNum, string tittle, string author, string description, string genre)
+    class Closet
     {
-        _shelfs[ShelfNum].addBook(tittle, author, description, genre);
+        public string Description { get; }
+        private List<Shelf> _shelves = new();
+
+        public Closet(int shelvesCount, string description)
+        {
+            Description = description;
+            for (int i = 0; i < shelvesCount; i++)
+            {
+                _shelves.Add(new Shelf());
+            }
+        }
+
+        public void DisplayShelves()
+        {
+            for (int i = 0; i < _shelves.Count; i++)
+            {
+                Console.WriteLine($"Полка {i + 1}");
+            }
+        }
+
+        public bool AddBookToShelf(int shelfNumber, string title, string author, string genre, string description)
+        {
+            if (shelfNumber >= 1 && shelfNumber <= _shelves.Count)
+            {
+                _shelves[shelfNumber - 1].AddBook(new Book(title, author, genre, description));
+                return true;
+            }
+            return false;
+        }
+
+        public Book? FindBookByTitle(string title)
+        {
+            foreach (var shelf in _shelves)
+            {
+                var book = shelf.FindBookByTitle(title);
+                if (book != null)
+                {
+                    return book;
+                }
+            }
+            return null;
+        }
+
+        public bool RemoveBookByTitle(string title)
+        {
+            foreach (var shelf in _shelves)
+            {
+                if (shelf.RemoveBookByTitle(title))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
-}
 
-class Shelf
-{
-    private List<Book> _books;
-
-    public Shelf()
+    class Shelf
     {
-        _books = new List<Book>();
+        private List<Book> _books = new();
+
+        public void AddBook(Book book) => _books.Add(book);
+
+        public Book? FindBookByTitle(string title)
+        {
+            return _books.FirstOrDefault(b => b.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+        }
+
+        public bool RemoveBookByTitle(string title)
+        {
+            var book = FindBookByTitle(title);
+            if (book != null)
+            {
+                _books.Remove(book);
+                return true;
+            }
+            return false;
+        }
     }
 
-    public void addBook(string tittle, string author, string description, string genre)
+    class Book
     {
-        _books.Add(new Book(tittle, author, description, genre));
-    }
-}
+        public string Title { get; }
+        public string Author { get; }
+        public string Genre { get; }
+        public string Description { get; }
 
-class Library
-{
-    private List<Closet> _closets;
-
-    public Library()
-    {
-        _closets = new List<Closet>();
-    }
-
-    public void creatCloset(int shelfsValue, string closetDiscription)
-    {
-        _closets.Add(new Closet(shelfsValue, closetDiscription));
-    }
-
-    public int getClosetValue() { return _closets.Count; }
-
-    public void deleteCloset(int closetNumber)
-    {
-        _closets.RemoveAt(closetNumber - 1);
-    }
-
-    public int getShelfValue(int numberOfCloset) { return _closets[numberOfCloset].getShelfValue(); }
-
-    public void createBook(int closetNum, int ShelfNum, string tittle, string author, string description, string genre)
-    {
-        _closets[closetNum].createBook(ShelfNum, tittle, author, description, genre);
+        public Book(string title, string author, string genre, string description)
+        {
+            Title = title;
+            Author = author;
+            Genre = genre;
+            Description = description;
+        }
     }
 }
