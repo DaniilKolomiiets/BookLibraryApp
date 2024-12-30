@@ -1,0 +1,30 @@
+[33mcommit 03e3dd1390ff21f583c9d93e5ebce6583f538759[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: DaniilKolomiiets <daniilkolomii@example.com>
+Date:   Thu Dec 26 20:19:12 2024 +0200
+
+    add optimization
+
+[33mcommit 7a04bc8bbe38c5bcde598500b8c6d60e073a14cb[m
+Merge: 251720d 2446423
+Author: DaniilKolomiiets <daniilkolomii@example.com>
+Date:   Thu Dec 26 15:05:40 2024 +0200
+
+    add half of program
+
+[33mcommit 2446423b4a0dee6ce3372c5e9387dae29968ccb0[m
+Author: Daniil <daniilkolomii@gmail.com>
+Date:   Thu Dec 26 14:52:33 2024 +0200
+
+    Initial commit
+
+[33mcommit 251720d54683c98a4785f9c6f38e508268fcd43f[m[33m ([m[1;31morigin/nameTwo[m[33m)[m
+Author: DaniilKolomiiets <daniilkolomii@example.com>
+Date:   Thu Dec 26 14:49:02 2024 +0200
+
+    add half of program
+
+[33mcommit f98c4195f353c4082ddd549ee0afc203733b0644[m
+Author: Коломиец Даниил <CringeStarr>
+Date:   Sun Dec 15 22:40:43 2024 +0200
+
+    new
