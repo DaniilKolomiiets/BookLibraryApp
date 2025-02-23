@@ -1,10 +1,9 @@
-﻿namespace YourNamespace
+﻿namespace Kolomiiets.Library
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
-            Library library = new Library();
             Core core = new Core();
             bool isRunning = true;
 
@@ -17,23 +16,23 @@
                 {
                     case 1: // Добавить шкаф
                         Console.Clear();
-                        core.AddCloset(library);
+                        core.AddCloset();
                         break;
                     case 2: // Удалить шкаф
                         Console.Clear();
-                        core.RemoveCloset(library);
+                        core.RemoveCloset();
                         break;
                     case 3: // Добавить книгу
                         Console.Clear();
-                        core.AddBook(library);
+                        core.AddBook();
                         break;
                     case 4: // Удалить книгу
                         Console.Clear();
-                        core.RemoveBook(library);
+                        core.RemoveBook();
                         break;
                     case 5: // Найти книгу
                         Console.Clear();
-                        core.FindBook(library);
+                        core.FindBook();
                         break;
                     case 6: // Закрыть программу
                         Console.Clear();
@@ -49,6 +48,9 @@
 
     class Core
     {
+        private Library _library = new Library();
+
+
         public void PrintMenu()
         {
             Console.Clear();
@@ -65,21 +67,21 @@
             Console.WriteLine("\n7) Закрыть пргограмму");
         }
 
-        public void AddCloset(Library library)
+        public void AddCloset()
         {
             int shelfCount = GetIntInput("Введите количество полок: ");
             string description = GetStringInput("Введите описание шкафа: ");
-            library.AddCloset(shelfCount, description);
+            _library.AddCloset(shelfCount, description);
             Console.Write("Шкаф добавлен!");
             Console.ReadKey();
         }
 
-        public void RemoveCloset(Library library)
+        public void RemoveCloset()
         {
-            library.DisplayClosets();
+            _library.DisplayClosets();
 
             int closetNumber = GetIntInput("\nВведите номер шкафа для удаления: ");
-            if (library.RemoveCloset(closetNumber))
+            if (_library.RemoveCloset(closetNumber))
             {
                 Console.Write("Шкаф удалён");
             }
@@ -90,7 +92,7 @@
             Console.ReadKey();
         }
 
-        public void AddBook(Library library)
+        public void AddBook()
         {
             string title = GetStringInput("Введите название книги: ");
             string author = GetStringInput("Введите автора: ");
@@ -98,14 +100,14 @@
             string description = GetStringInput("Введите описание книги: ");
             Console.WriteLine();
 
-            library.DisplayClosets();
+            _library.DisplayClosets();
             int closetNumber = GetIntInput("Введите номер шкафа: ");
             Console.WriteLine();
-            library.DisplayShelves(closetNumber);
+            _library.DisplayShelves(closetNumber);
             int shelfNumber = GetIntInput("Введите номер полки: ");
             Console.WriteLine();
 
-            if (library.AddBookToShelf(closetNumber, shelfNumber, title, author, genre, description))
+            if (_library.AddBookToShelf(closetNumber, shelfNumber, title, author, genre, description))
             {
                 Console.Write("Книга добавлена!");
             }
@@ -116,10 +118,10 @@
             Console.ReadKey();
         }
 
-        public void RemoveBook(Library library)
+        public void RemoveBook()
         {
             string title = GetStringInput("Введите название книги для удаления: ");
-            if (library.RemoveBookByTitle(title))
+            if (_library.RemoveBookByTitle(title))
             {
                 Console.Write("Книга успешно удалена.");
             }
@@ -130,11 +132,11 @@
             Console.ReadKey();
         }
 
-        public void FindBook(Library library)
+        public void FindBook()
         {
             string title = GetStringInput("Введите название книги для поиска: ");
             Console.WriteLine();
-            var (book, closetNumber, shelfNumber) = library.FindBookByTitle(title);
+            var (book, closetNumber, shelfNumber) = _library.FindBookByTitle(title);
 
             if (book != null)
             {

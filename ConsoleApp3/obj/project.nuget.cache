@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "9YfvtyMCBAY=",
+  "dgSpecHash": "86+ULG1gd2M=",
   "success": true,
   "projectFilePath": "C:\\Users\\Spayl\\source\\repos\\ConsoleApp3\\ConsoleApp3\\ConsoleApp3.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Spayl\\.nuget\\packages\\fuzzysharp\\2.0.2\\fuzzysharp.2.0.2.nupkg.sha512"
+  ],
   "logs": []
 }
